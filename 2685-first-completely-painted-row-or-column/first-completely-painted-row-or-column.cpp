@@ -4,7 +4,7 @@ public:
         int n = mat.size();
         int m = mat[0].size();
 
-        pair<int,int> v[m*n+1];
+        vector<pair<int,int>> v(n*m+1);
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 v[mat[i][j]] = {i,j};
