@@ -1,6 +1,6 @@
 class Solution {
 private:
-    bool solve(int src, int target, unordered_map<int,vector<int>>& mp, int n){
+    bool bfs(int src, int target, unordered_map<int,vector<int>>& mp, int n){
         vector<bool> vis(n,false);
         vis[src] = true;
 
@@ -37,7 +37,7 @@ public:
             int u = queries[i][0];
             int v = queries[i][1];
             
-            if(solve(u,v,mp,n)) ans[i] = true;
+            if(bfs(u,v,mp,n)) ans[i] = true;
         }
         return ans;
     }
