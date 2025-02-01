@@ -1,8 +1,6 @@
-class Solution {            // Using Kadane's algo
+class Solution {
 public:
     int maxFrequency(vector<int>& nums, int k) {
-        int n = nums.size();
-
         int ans = 0, val = 0;
         for(auto i: nums) val += (i == k);
         ans = val;
@@ -15,8 +13,7 @@ public:
                 if(cnt < 0) cnt = 0;
 
                 if(num == i) cnt++;
-                else if(num == k) cnt--;    
-
+                else if(num == k) cnt--;
                 maxi = max(maxi,cnt);
             }
             ans = max(ans,val+maxi);
