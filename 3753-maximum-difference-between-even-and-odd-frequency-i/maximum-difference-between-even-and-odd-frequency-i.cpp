@@ -17,7 +17,6 @@ public:
                 odd2 = min(odd2,it.second);
             }
         }
-        if(odd1 == INT_MIN || odd2 == INT_MAX) return -1;
         return max(odd1-even2,odd2-even1);
     }
 };
