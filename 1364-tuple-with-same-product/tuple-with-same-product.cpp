@@ -1,28 +1,55 @@
-class Solution {            // Better Approach
+class Solution {            // Optimal
 public:
     int tupleSameProduct(vector<int>& nums) {
         int n = nums.size();
-        sort(nums.begin(),nums.end());
+
+        unordered_map<int,int> mp;
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                int p = nums[i] * nums[j];
+                mp[p]++;
+            }
+        }
 
         int ans = 0;
-        for(int i=0; i<n; i++){
-            for(int j=n-1; j>i; j--){
-                long long prod = nums[i] * nums[j];
-                unordered_set<int> st;
+        for(auto it: mp){
+            int freq = it.second;
+            if(freq <= 1) continue;
 
-                for(int k=i+1; k<j; k++){
-                    if(prod % nums[k] == 0){
-                        int val = prod / nums[k];
-
-                        if(st.count(val) >= 1) ans++;
-                        st.insert(nums[k]);
-                    }
-                }
-            }
+            ans += freq * (freq-1)/2;       // nC2 => (n * (n-1)/2) 
         }
         return ans * 8;         // Every tuple can have 8 permutations
     }
 };
+
+
+
+
+// class Solution {            // Better Approach
+// public:
+//     int tupleSameProduct(vector<int>& nums) {
+//         int n = nums.size();
+//         sort(nums.begin(),nums.end());
+
+//         int ans = 0;
+//         for(int i=0; i<n; i++){
+//             for(int j=n-1; j>i; j--){
+//                 long long prod = nums[i] * nums[j];
+//                 unordered_set<int> st;
+
+//                 for(int k=i+1; k<j; k++){
+//                     if(prod % nums[k] == 0){
+//                         int val = prod / nums[k];
+
+//                         if(st.count(val) >= 1) ans++;
+//                         st.insert(nums[k]);
+//                     }
+//                 }
+//             }
+//         }
+//         return ans * 8;         // Every tuple can have 8 permutations
+//     }
+// };
 
 
 
