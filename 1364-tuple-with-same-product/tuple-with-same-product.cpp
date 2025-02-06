@@ -6,7 +6,7 @@ public:
 
         int ans = 0;
         for(int i=0; i<n; i++){
-            for(int j=n-1; j>=0; j--){
+            for(int j=n-1; j>i; j--){
                 if(i == j) continue;
 
                 int k = i+1, l = j-1;
