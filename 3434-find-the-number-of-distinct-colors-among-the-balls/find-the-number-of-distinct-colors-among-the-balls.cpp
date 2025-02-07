@@ -12,7 +12,7 @@ public:
             int x = queries[i][0];          // Ball
             int y = queries[i][1];          // Color
 
-            if(mp.find(x) == mp.end()){     // If ball is not colored, color it & insert color in set
+            if(mp.find(x) == mp.end()){     // If ball is not colored, color it
                 mp[x] = y;                  
             }
             else{
@@ -20,7 +20,6 @@ public:
 
                 freq[prev]--;               // Re-Coloring
                 if(freq[prev] == 0) freq.erase(prev);
-
                 mp[x] = y;
             }
 
