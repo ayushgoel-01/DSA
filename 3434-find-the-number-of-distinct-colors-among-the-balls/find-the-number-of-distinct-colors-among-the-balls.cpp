@@ -6,7 +6,6 @@ public:
         vector<int> ans;
         
         unordered_map<int,int> mp;
-        unordered_set<int> st;
         unordered_map<int,int> freq;
 
         for(int i=0; i<n; i++){
@@ -15,20 +14,18 @@ public:
 
             if(mp.find(x) == mp.end()){     // If ball is not colored, color it & insert color in set
                 mp[x] = y;                  
-                st.insert(y);
             }
             else{
                 int prev = mp[x];            // If ball is already colored, find prev color
 
-                if(freq[prev] == 1) st.erase(prev);
                 freq[prev]--;               // Re-Coloring
+                if(freq[prev] == 0) freq.erase(prev);
 
                 mp[x] = y;
-                st.insert(y);
             }
 
-            ans.push_back((int)st.size());
             freq[y]++;                      // Frequency of current color increases
+            ans.push_back((int)freq.size());
         }
         return ans;
     }
