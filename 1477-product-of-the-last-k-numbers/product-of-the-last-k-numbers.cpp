@@ -1,9 +1,7 @@
 class ProductOfNumbers {
 public:
     vector<int> v;
-    long long sum;
     ProductOfNumbers() {
-        sum = 1;
     }
     
     void add(int num) {
