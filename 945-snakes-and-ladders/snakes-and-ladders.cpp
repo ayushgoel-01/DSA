@@ -28,19 +28,14 @@ public:
 
                     int row = n-b-1, col = 0;
 
-                    if(leftToRight){
-                        col = a;
-                    }
+                    if(leftToRight) col = a;
                     else col = n - a - 1;
 
                     if(vis[row][col]) continue;
 
-                    if(board[row][col] != -1){
-                        q.push(board[row][col]);
-                    }
-                    else{
-                        q.push(val);
-                    }
+                    if(board[row][col] != -1) q.push(board[row][col]);
+                    else q.push(val);
+
                     vis[row][col] = true;
                 }
             }
