@@ -23,9 +23,7 @@ public:
                         val = min(val,abs(v[a]-v[b]));
                     }
                 }
-
-                if(val == INT_MAX) ans[i][j] = 0;
-                else ans[i][j] = val;
+                ans[i][j] = (val == INT_MAX) ? 0 : val;
             }
         }
         return ans;
