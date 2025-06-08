@@ -9,7 +9,7 @@ public:
         }
 
         priority_queue<int> pq;
-        for(auto it: mp){
+        for(auto& it: mp){
             pq.push(it.second);
         }
 
