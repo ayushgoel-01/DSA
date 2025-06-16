@@ -21,6 +21,7 @@ private:
 public:
     bool canMakeEqual(vector<int>& nums, int k) {
         int n = nums.size();
+        // Try to make all 1's or all -1's
         return solve(nums,k,n,1) || solve(nums,k,n,-1); 
     }
 };
