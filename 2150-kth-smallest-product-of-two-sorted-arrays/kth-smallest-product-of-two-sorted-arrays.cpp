@@ -6,12 +6,11 @@ private:
 
         for(int i=0; i<n; i++){
 
-            if(nums1[i] >= 0){
+            if(nums1[i] >= 0){          // Handle Positive Product Case
                 int start = 0, end = m-1, cnt = -1;
 
                 while(start <= end){
                     int mid = start + (end - start) / 2;
-
                     ll currp = 1LL * nums1[i] * nums2[mid];
 
                     if(currp <= p){
@@ -22,12 +21,11 @@ private:
                 } 
                 finalCnt += cnt+1;
             }
-            else{
+            else{                       // Handle Negative Product Case
                 int start = 0, end = m-1, cnt = m;
 
                 while(start <= end){
                     int mid = start + (end - start) / 2;
-
                     ll currp = 1LL * nums1[i] * nums2[mid];
 
                     if(currp <= p){
