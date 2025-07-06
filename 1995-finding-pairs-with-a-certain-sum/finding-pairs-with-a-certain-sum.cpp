@@ -19,7 +19,7 @@ public:
     
     int count(int tot) {
         int ans = 0;
-        for(auto i: mp1){
+        for(auto& i: mp1){
             int val = i.first;
             int freq = i.second;
 
