@@ -1,4 +1,4 @@
-class Solution {
+class Solution {            // Using Memoization
 private:
     int solve(int i, vector<int>& nums, int prev, int rem, vector<vector<vector<int>>>& dp){
         if(i >= nums.size()) return 0;
@@ -27,3 +27,38 @@ public:
         return ans + 1;
     }
 };
+
+
+
+
+
+
+
+// class Solution {            // Using Tabulation (LIS Pattern) -> TLE
+// public:
+//     int maximumLength(vector<int>& nums) {
+//         int n = nums.size();
+//         int maxi = INT_MIN;
+
+//         vector<int> dp0(n,1);
+//         for(int i=1; i<n; i++){
+//             for(int j=0; j<i; j++){
+//                 if((nums[i] + nums[j]) % 2 == 0){
+//                     dp0[i] = max(dp0[i],1 + dp0[j]);
+//                     maxi = max(maxi,dp0[i]);
+//                 }
+//             }
+//         }
+
+//         vector<int> dp1(n,1);
+//         for(int i=1; i<n; i++){
+//             for(int j=0; j<i; j++){
+//                 if((nums[i] + nums[j]) % 2 == 1){
+//                     dp1[i] = max(dp1[i],1 + dp1[j]);
+//                     maxi = max(maxi,dp1[i]);
+//                 }
+//             }
+//         }
+//         return maxi;
+//     }
+// };
