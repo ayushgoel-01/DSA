@@ -17,19 +17,12 @@ public:
         int n = folder.size();
         sort(folder.begin(),folder.end());
 
-        for(auto i: folder){
-            cout<<i<<" ";
-        }
-
         vector<string> ans;
         string s = folder[0];
         ans.push_back(s);
 
         for(int i=1; i<n; i++){
-            if(match(folder[i],s)){
-                continue;
-            }
-            else{
+            if(!match(folder[i],s)){
                 ans.push_back(folder[i]);
                 s = folder[i];
             }
