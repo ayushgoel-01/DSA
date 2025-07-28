@@ -2,8 +2,7 @@ class Solution {
 private:
     int solve(int i, vector<int>& nums, int curr, int target){
         if(i >= nums.size()){
-            if(curr == target) return 1;
-            return 0;
+            return curr == target;
         }
 
         int take = solve(i+1,nums,curr|nums[i],target);
