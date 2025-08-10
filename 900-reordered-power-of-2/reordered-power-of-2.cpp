@@ -1,19 +1,18 @@
 class Solution {
+private:
+    string getSorted(int n){
+        string s = to_string(n);
+        sort(s.begin(),s.end());
+        return s;
+    }
 public:
     bool reorderedPowerOf2(int n) {
-        vector<string> v;
+        string s = getSorted(n);
+
         long long num = 1;
         while(num < 1e9){
-            v.push_back(to_string(num));
+            if(s == getSorted(num)) return true;
             num = num * 2;
-        }
-
-        string temp = to_string(n);
-        sort(temp.begin(),temp.end());
-
-        for(auto& i: v){
-            sort(i.begin(),i.end());
-            if(i == temp) return true;
         }
         return false;
     }
