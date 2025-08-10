@@ -1,18 +1,19 @@
-class Solution {
+class Solution {            // Using Digit Count
 private:
-    string getSorted(int n){
-        string s = to_string(n);
-        sort(s.begin(),s.end());
-        return s;
+    vector<int> solve(int n){
+        vector<int> v(10,0);
+        while(n){
+            v[n%10]++;
+            n = n/10;
+        }
+        return v;
     }
 public:
     bool reorderedPowerOf2(int n) {
-        string s = getSorted(n);
+        vector<int> v = solve(n);
 
-        long long num = 1;
-        while(num < 1e9){
-            if(s == getSorted(num)) return true;
-            num = num * 2;
+        for(int i=0; i<=29; i++){
+            if(v == solve((1 << i))) return true;
         }
         return false;
     }
