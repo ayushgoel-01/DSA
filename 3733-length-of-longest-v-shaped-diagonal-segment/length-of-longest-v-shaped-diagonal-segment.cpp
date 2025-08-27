@@ -3,23 +3,28 @@ private:
     int n, m;
     int delrow[4] = {1,1,-1,-1};
     int delcol[4] = {1,-1,-1,1};
+    int dp[501][501][4][2];
+
     int solve(int i, int j, int d, vector<vector<int>>& grid, int target, bool turn){
         int nrow = i + delrow[d];
         int ncol = j + delcol[d];
 
         if(nrow < 0 || nrow >= n || ncol < 0 || ncol >= m || grid[nrow][ncol] != target) return 0;
 
+        if(dp[i][j][d][turn] != -1) return dp[i][j][d][turn];
+
         int ans = 1 + solve(nrow,ncol,d,grid,(target==2)?0:2,turn);
         if(turn){
             ans = max(ans,1 + solve(nrow,ncol,(d+1)%4,grid,(target==2)?0:2,false));
         }
 
-        return ans;
+        return dp[i][j][d][turn] = ans;
     }
 public:
     int lenOfVDiagonal(vector<vector<int>>& grid) {
         n = grid.size();
         m = grid[0].size();
+        memset(dp,-1,sizeof(dp));
 
         int ans = 0;
         for(int i=0; i<n; i++){
