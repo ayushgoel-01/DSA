@@ -3,7 +3,13 @@ private:
     bool isSafe(int row, int col, char ch, vector<vector<char>>& board){
         for(int i=0; i<9; i++){
             if(board[row][i] == ch || board[i][col] == ch) return false;
-            if(board[3*(row/3)+i/3][3*(col/3)+i%3] == ch) return false;
+        }
+
+        int i = 3*(row/3), j = 3*(col/3);       // For 3X3 board
+        for(int k=0; k<3; k++){
+            for(int l=0; l<3; l++){
+                if(board[i+k][j+l] == ch) return false;
+            }
         }
         return true;
     }
