@@ -1,22 +1,17 @@
 class Solution {
 private:
     double getDelta(int pass, int total){
-        double prev = (double)(pass/(double)total);
-        double curr = (double)((pass+1)/(double)(total+1));
-        double delta = curr - prev;
-        return delta;
+        double prev = (double)pass/total;
+        double curr = (double)(pass+1)/(total+1);
+        return curr - prev;
     }
 public:
     double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
         int n = classes.size();
-
         priority_queue<pair<double,int>> pq;
 
         for(int i=0; i<n; i++){
-            int pass = classes[i][0];
-            int total = classes[i][1];
-
-            double delta = getDelta(pass,total);
+            double delta = getDelta(classes[i][0],classes[i][1]);
             pq.push({delta,i});
         }
 
@@ -34,13 +29,8 @@ public:
 
         double ans = 0;
         for(auto it: classes){
-            int pass = it[0];
-            int total = it[1];
-
-            double ratio = (double)pass/(double)total;
-            ans += ratio;
+            ans += (double)it[0]/it[1];
         }
-        ans = ans/(double)n;
-        return ans;
+        return ans/n;
     }
 };
