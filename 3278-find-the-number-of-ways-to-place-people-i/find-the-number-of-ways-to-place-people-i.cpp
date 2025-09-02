@@ -26,10 +26,6 @@ public:
         };
         sort(points.begin(),points.end(),cmp);
 
-        for(auto it: points){
-            cout<<it[0]<<","<<it[1]<<"  ";
-        }
-
         int ans = 0;
 
         for(int i=0; i<n; i++){
@@ -46,7 +42,6 @@ public:
                 st2.insert(y2);
             }
         }
-
         return ans;
     }
 };
