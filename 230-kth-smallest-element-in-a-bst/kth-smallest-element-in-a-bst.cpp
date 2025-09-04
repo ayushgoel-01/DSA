@@ -1,0 +1,17 @@
+class Solution {
+private:
+    void solve(TreeNode* root, vector<int>& v){
+        if(!root) return;
+
+        solve(root -> left,v);
+        v.push_back(root -> val);
+        solve(root -> right,v);
+    }
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        vector<int> v;
+        solve(root,v);
+
+        return v[k-1];
+    }
+};
