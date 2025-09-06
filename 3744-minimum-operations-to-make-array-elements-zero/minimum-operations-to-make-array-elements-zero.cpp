@@ -1,37 +1,35 @@
 class Solution {
+#define ll long long
+private:
+    ll solve(ll l, ll r){
+        ll L = 1;
+        int steps = 1;
+
+        ll ans = 0;
+        while(L <= r){
+            ll R = 4 * L - 1;
+            ll start = max(l,L);
+            ll end = min(r,R);
+
+            if(start <= end){
+                ans += (end-start+1) * steps;
+            }
+            L = L * 4;
+            steps++;
+        }
+        return ans;
+    }
 public:
     long long minOperations(vector<vector<int>>& queries) {
         int n = queries.size();
 
-        long long ans = 0;
+        ll ans = 0;
         for(auto& it: queries){
-            long long l = it[0];
-            long long r = it[1];
-            int steps = 1;
+            ll l = it[0];
+            ll r = it[1];
 
-            long long L = 1, R = 3;
-            long long a = max(l,L);
-            long long b = min(r,R);
-
-            long long val = 0;
-            while(L <= r){
-                a = max(l,L);
-                b = min(r,R);
-
-                if(a > b){
-                    L = L * 4;
-                    R = ((R+1) * 1LL * 4)-1;
-                    steps++;
-                    continue;
-                }
-                int num = (b-a)+1;
-                val = val + ((num * 1LL * steps));
-
-                L = L * 4;
-                R = ((R+1) * 1LL * 4)-1;
-                steps++;
-            }
-            ans += ceil((double)val/2);
+            ll steps = solve(l,r);
+            ans += (steps+1)/2;         // Taking ceil by doing +1
         }
         return ans;
     }
