@@ -5,11 +5,9 @@ private:
 
         solve(root -> left,prev,first,end);
 
-        if(prev){
-            if(root -> val < prev -> val){
-                if(!first) first = prev;
-                end = root;
-            }
+        if(prev && prev -> val > root -> val){
+            if(!first) first = prev;
+            end = root;
         }
 
         prev = root;
