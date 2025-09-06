@@ -1,30 +1,24 @@
 class Solution {
 private:
-    void findInorder(TreeNode* root, vector<int>& v){
+    void solve(TreeNode* root, TreeNode* &prev, TreeNode* &first, TreeNode* &end){
         if(!root) return;
 
-        findInorder(root -> left,v);
-        v.push_back(root -> val);
-        findInorder(root -> right,v);
-    }
+        solve(root -> left,prev,first,end);
 
-    void solve(TreeNode* root, vector<int>& v, int& i){
-        if(!root || i >= v.size()) return;
-
-        solve(root -> left,v,i);
-        if(root -> val != v[i]){
-            root -> val = v[i];
+        if(prev){
+            if(root -> val < prev -> val){
+                if(!first) first = prev;
+                end = root;
+            }
         }
-        i++;
-        solve(root -> right,v,i);
+
+        prev = root;
+        solve(root -> right,prev,first,end);
     }
 public:
     void recoverTree(TreeNode* root) {
-        vector<int> v;
-
-        findInorder(root,v);
-        sort(v.begin(),v.end());
-        int idx = 0;
-        solve(root,v,idx);
+        TreeNode* prev = NULL, *first = NULL, *end = NULL;
+        solve(root,prev,first,end);
+        swap(first -> val,end -> val);
     }
 };
