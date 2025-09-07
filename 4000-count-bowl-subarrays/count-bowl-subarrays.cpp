@@ -35,14 +35,11 @@ public:
 
         long long ans = 0;
         for(int i=0; i<n; i++){
-            if(i > 0){
-                int l = left[i];
-                if(l != -1 && i-l+1 >= 3) ans++;
-            }
-            if(i < n-1){
-                int r = right[i];
-                if(r != -1 && r-i+1 >= 3) ans++;
-            }
+            int l = left[i];
+            if(l != -1 && i-l+1 >= 3) ans++;
+
+            int r = right[i];
+            if(r != -1 && r-i+1 >= 3) ans++;
         }
         return ans;
     }
