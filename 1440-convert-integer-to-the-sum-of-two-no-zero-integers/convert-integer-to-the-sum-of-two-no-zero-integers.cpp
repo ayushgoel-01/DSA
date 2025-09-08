@@ -16,13 +16,13 @@ private:
     }
 public:
     vector<int> getNoZeroIntegers(int n) {
-        for(int i=1; i<n; i++){
-            for(int j=1; j<n; j++){
-                if(i+j == n && solve(i,j)){
-                    return {i,j};
+        for(int i=1; i<(n/2)+1; i++){
+                int num1 = i;
+                int num2 = n-i;
+                if(num1 + num2 == n && solve(num1,num2)){
+                    return {num1,num2};
                 }
-            }
         }
-        return {-1,-1};
+        return {0,0};
     }
 };
