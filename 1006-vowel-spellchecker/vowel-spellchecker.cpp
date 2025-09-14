@@ -5,30 +5,26 @@ private:
                 ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U';
     }
 
-    string toLowerCase(string& s){
-        int n = s.size();
-        string ans = "";
+    string toLowerCase(string s){
+        for(auto &i: s){
+            if(!(i >= 'a' && i <= 'z')) i = i - 'A' + 'a';
+        }
+        return s;
+    }
 
-        for(auto i: s){
-            if(i >= 'a' && i <= 'z') ans += i;
-            else ans += i - 'A' + 'a';
+    string toWildCard(string s){
+        string ans = toLowerCase(s);
+
+        for(auto &i: ans){
+            if(isVowel(i)) i = '*';
         }
         return ans;
     }
 
-    string toWildCard(string& s){
-        string tmp = toLowerCase(s);
-        string ans = "";
-
-        for(auto i: tmp){
-            if(isVowel(i)) ans += "*";
-            else ans += i;
-        }
-        return ans;
-    }
-
-    void makeMapping(vector<string>& v, int n, unordered_map<string,string>& mp1,
+    void makeMapping(vector<string>& v, unordered_map<string,string>& mp1, 
         unordered_map<string,string>& mp2){
+        int n = v.size();
+
         for(int i=0; i<n; i++){
             string s = v[i];
             string temp = toLowerCase(s);
@@ -41,13 +37,12 @@ private:
 
 public:
     vector<string> spellchecker(vector<string>& wordlist, vector<string>& queries) {
-        int n = wordlist.size();
         int m = queries.size();
 
         unordered_map<string,string> mp1, mp2;
         unordered_set<string> st(wordlist.begin(),wordlist.end());
 
-        makeMapping(wordlist,n,mp1,mp2);
+        makeMapping(wordlist,mp1,mp2);
         vector<string> ans(m,"");
 
         for(int i=0; i<m; i++){
