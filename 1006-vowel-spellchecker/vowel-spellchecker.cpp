@@ -33,11 +33,8 @@ private:
             string s = v[i];
             string temp = toLowerCase(s);
             if(mp1.find(temp) == mp1.end()) mp1[temp] = s;
-        }
 
-        for(int i=0; i<n; i++){
-            string s = v[i];
-            string temp = toWildCard(s);
+            temp = toWildCard(s);
             if(mp2.find(temp) == mp2.end()) mp2[temp] = s;
         }
     }
@@ -52,7 +49,7 @@ public:
 
         makeMapping(wordlist,n,mp1,mp2);
         vector<string> ans(m,"");
-        
+
         for(int i=0; i<m; i++){
             string l1 = toLowerCase(queries[i]);
             string l2 = toWildCard(queries[i]);
