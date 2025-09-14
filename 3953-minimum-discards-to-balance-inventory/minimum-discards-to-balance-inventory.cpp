@@ -10,9 +10,7 @@ public:
                 ans++;
                 arrivals[j] = -1;
             }
-            else{
-                mp[arrivals[j]]++;
-            }
+            else mp[arrivals[j]]++;
             
             if(j-w+1 >= 0 && arrivals[j-w+1] != -1){
                 mp[arrivals[j-w+1]]--;
