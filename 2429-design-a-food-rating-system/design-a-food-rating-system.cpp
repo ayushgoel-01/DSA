@@ -1,7 +1,7 @@
 struct cmp {
     bool operator()(const pair<int,string>& a, const pair<int,string>& b) const {
-        if (a.first == b.first) return a.second > b.second;
-        return a.first < b.first;       
+        if (a.first == b.first) return a.second < b.second;
+        return a.first > b.first;       
     }
 };
 
@@ -10,7 +10,7 @@ class FoodRatings {
 public:
     unordered_map<string,int> mp;
     unordered_map<string,string> foodToCuisine;
-    map<string, priority_queue<P,vector<P>,cmp>> pq;
+    map<string, set<P,cmp>> st;
 
     FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
         int n = foods.size();
@@ -21,26 +21,22 @@ public:
             int rating = ratings[i];
 
             mp[food] = rating;
-            pq[cuisine].push({rating,food});
+            st[cuisine].insert({rating,food});
             foodToCuisine[food] = cuisine;
         }
     }
     
     void changeRating(string food, int newRating) {
-        mp[food] = newRating;
+        int rating = mp[food];
         string cuisine = foodToCuisine[food];
-        pq[cuisine].push({newRating,food});
+
+        st[cuisine].erase({rating,food});
+        st[cuisine].insert({newRating,food});
+        mp[food] = newRating;
     }
     
     string highestRated(string cuisine) {
-        while(!pq[cuisine].empty()){
-            int currRating = pq[cuisine].top().first;
-            string food = pq[cuisine].top().second;
-            int actualRating = mp[food];
-
-            if(currRating == actualRating) break;
-            pq[cuisine].pop();
-        }
-        return pq[cuisine].top().second;
+        P ans = *(st[cuisine].begin());
+        return ans.second;
     }
 };
