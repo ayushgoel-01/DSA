@@ -3,8 +3,7 @@ private:
     bool containsChar(string& s, int idx){
         int n = s.size();
         for(int i=idx; i<n; i++){
-            if(s[i] >= '0' && s[i] <= '9') continue;
-            else return true;
+            if(!(s[i] >= '0' && s[i] <= '9')) return true;
         }
         return false;
     }
@@ -58,6 +57,5 @@ public:
         int row2 = stoi(s2.substr(1));
 
         return grid[row1][col1] + grid[row2][col2];
-        return 0;
     }
 };
