@@ -1,8 +1,9 @@
 class Solution {
 private:
-    void solve(int i, int j, vector<vector<bool>>& ocean, int row, int col, vector<vector<int>>& heights, int n, int m){
-        if(i < 0 || i >= n || j < 0 || j >= m || ocean[i][j] || (row >= 0 && col >= 0 && 
-        heights[row][col] > heights[i][j])) return;
+    void solve(int i, int j, vector<vector<bool>>& ocean, int row, int col, vector<vector<int>>&
+     heights, int n, int m){
+        if(i < 0 || i >= n || j < 0 || j >= m || ocean[i][j] || (row >= 0 && col >= 0 
+        && heights[row][col] > heights[i][j])) return;
 
         ocean[i][j] = true;
 
