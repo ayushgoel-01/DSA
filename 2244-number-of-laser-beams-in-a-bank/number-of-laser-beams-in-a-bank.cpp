@@ -1,59 +1,40 @@
 class Solution {
 private:
-    int count(string& s){
-        int cnt = 0;
-        for(auto i: s){
-            if(i == '1') cnt++;
+    void solve(vector<int>& cnt, vector<string>& bank, int n){
+        for(int i=0; i<n; i++){
+            int val = 0;
+            for(auto& j: bank[i]){
+                if(j == '1') val++;
+            }
+            cnt[i] = val;
         }
-        return cnt;
     }
 public:
-    int numberOfBeams(vector<string>& bank) {       // optimal
+    int numberOfBeams(vector<string>& bank) {
+        int n = bank.size();
+        int m = bank[0].size();
+
+        vector<int> cnt(n,0);
+        solve(cnt,bank,n);
+
         int ans = 0;
-        int prevRow = 0;
+        int prev = 0;
+        while(prev < n && cnt[prev] <= 0){
+            prev++;
+        }
+        int curr = prev+1;
 
-        for(auto i: bank){
-            int currRow = count(i);
-            if(currRow == 0) continue;
-
-            ans += currRow * prevRow;
-            prevRow = currRow;
+        while(curr < n){
+            if(cnt[curr] <= 0){
+                curr++;
+                continue;
+            }
+            else{
+                ans += cnt[prev] * cnt[curr];
+                prev = curr;
+                curr++;
+            }
         }
         return ans;
     }
 };
-
-
-
-// class Solution {     // Brute Force (using freq array)
-// public:
-//     int numberOfBeams(vector<string>& bank) {
-//         int n = bank.size();
-
-//         vector<int> tmp(n,0);       // cnt array of 1's
-//         for(int i=0; i<n; i++){
-//             string s = bank[i];
-//             int cnt = 0;
-//             for(int j=0; j<s.size(); j++){
-//                 if(s[j] == '1') cnt++;
-//             }
-//             tmp[i] = cnt;
-//         }
-
-//         int ans = 0;
-//         int i = 0, j = i+1;
-//         while(i < n && j < n){
-//             if(tmp[i] != 0 && tmp[j] != 0 && i != j){
-//                 ans += tmp[i]*tmp[j];
-//                 i = j;
-//                 j++;
-//             }
-//             else if(tmp[i] == 0){
-//                 i++;
-//                 j++;
-//             }
-//             else if(tmp[j] == 0) j++;
-//         }
-//         return ans;
-//     }
-// };
