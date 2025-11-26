@@ -14,7 +14,7 @@ private:
         long long right = solve(i,j+1,(sum+grid[i][j])%k,grid,n,m,k,dp)%mod;
         long long down = solve(i+1,j,(sum+grid[i][j])%k,grid,n,m,k,dp)%mod;
 
-        return dp[i][j][sum] = (right%mod + down%mod)%mod;
+        return dp[i][j][sum] = (right + down) % mod;
     }
 public:
     int numberOfPaths(vector<vector<int>>& grid, int k) {
