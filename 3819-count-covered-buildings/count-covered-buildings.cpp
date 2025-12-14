@@ -4,14 +4,12 @@ public:
         int size = buildings.size();
 
         unordered_map<int,pair<int,int>> mp1, mp2;
-        for(int i=0; i<n; i++){
-            mp1[i] = {INT_MAX,INT_MIN};
-            mp2[i] = {INT_MAX,INT_MIN};
-        }
-
         for(auto it: buildings){
             int x = it[0];
             int y = it[1];
+
+            if(mp1.find(x) == mp1.end()) mp1[x] = {INT_MAX,INT_MIN};
+            if(mp2.find(y) == mp2.end()) mp2[y] = {INT_MAX,INT_MIN};
 
             mp1[x].first = min(mp1[x].first,y);
             mp1[x].second = max(mp1[x].second,y);
