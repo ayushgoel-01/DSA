@@ -15,6 +15,8 @@ public:
             int duration = currEnd - currStart;
 
             bool isFree = false;
+            ll earlyStartTime = LLONG_MAX, earlyStartIdx = 0;
+            
             for(int j=0; j<n; j++){
                 if(v[j].second <= currStart){
                     isFree = true;
@@ -22,17 +24,14 @@ public:
                     ans[j]++;
                     break;
                 }
+                if(v[j].second < earlyStartTime){
+                    earlyStartTime = v[j].second;
+                    earlyStartIdx = j;
+                }
             }
 
-            ll earlyStartTime = LLONG_MAX, earlyStartIdx = 0;
+            
             if(!isFree){
-                for(int j=0; j<n; j++){
-                    if(v[j].second < earlyStartTime){
-                        earlyStartTime = v[j].second;
-                        earlyStartIdx = j;
-                    }
-                }
-
                 v[earlyStartIdx] = {v[earlyStartIdx].second,v[earlyStartIdx].second + duration};
                 ans[earlyStartIdx]++;
             }
