@@ -1,49 +1,50 @@
 class Solution {
+#define ll long long
 public:
     int mostBooked(int n, vector<vector<int>>& meetings) {
         int m = meetings.size();
 
         sort(meetings.begin(),meetings.end());
 
-        // Keeps track when the ith room will be available
-        vector<long long> lastUsed(n,0);
         vector<int> ans(n,0);
+        vector<pair<ll,ll>> v(n,{0,0});
 
         for(int i=0; i<m; i++){
-            int start = meetings[i][0];
-            int end = meetings[i][1];
-            int duration = end - start;
-            bool found = false;
+            int currStart = meetings[i][0];
+            int currEnd = meetings[i][1];
+            int duration = currEnd - currStart;
 
-            long long earlyEndTime = LLONG_MAX;     // Track which room will get free early
-            int earlyEndRoom = 0;
-
-            for(int room=0; room<n; room++){
-                if(lastUsed[room] <= start){
-                    lastUsed[room] = end;
-                    ans[room]++;
-                    found = true;
+            bool isFree = false;
+            for(int j=0; j<n; j++){
+                if(v[j].second <= currStart){
+                    isFree = true;
+                    v[j] = {currStart,currEnd};
+                    ans[j]++;
                     break;
                 }
-                // Update Earliest Free room available
-                if(lastUsed[room] < earlyEndTime){
-                    earlyEndTime = lastUsed[room];
-                    earlyEndRoom = room;
-                }
             }
-            if(!found){     // If no room is empty, then check for earliest free room available
-                lastUsed[earlyEndRoom] += duration;
-                ans[earlyEndRoom]++;
+
+            ll earlyStartTime = LLONG_MAX, earlyStartIdx = 0;
+            if(!isFree){
+                for(int j=0; j<n; j++){
+                    if(v[j].second < earlyStartTime){
+                        earlyStartTime = v[j].second;
+                        earlyStartIdx = j;
+                    }
+                }
+
+                v[earlyStartIdx] = {v[earlyStartIdx].second,v[earlyStartIdx].second + duration};
+                ans[earlyStartIdx]++;
             }
         }
 
-        int maxi = -1, maxUsed = 0;
+        ll maxi = INT_MIN, maxIdx = 0;
         for(int i=0; i<n; i++){
             if(ans[i] > maxi){
                 maxi = ans[i];
-                maxUsed = i;
+                maxIdx = i;
             }
         }
-        return maxUsed;
+        return maxIdx;
     }
 };
