@@ -4,26 +4,26 @@ public:
         unordered_set<string> st(wordList.begin(),wordList.end());
 
         queue<pair<string,int>> q;
-        q.push({beginWord,0});
-        unordered_set<string> vis;
+        q.push({beginWord,1});
 
         while(!q.empty()){
             string s = q.front().first;
             int val = q.front().second;
             q.pop();
 
-            if(s == endWord) return val + 1;
+            if(s == endWord) return val;
 
             for(int i=0; i<s.size(); i++){
+                char original = s[i];
                 for(char ch='a'; ch<='z'; ch++){
-                    string temp = s;
-                    temp[i] = ch;
+                    s[i] = ch;
 
-                    if(st.count(temp) >= 1 && vis.count(temp) <= 0){
-                        q.push({temp,val+1});
-                        vis.insert(temp);
+                    if(st.count(s) >= 1){
+                        st.erase(s);
+                        q.push({s,val+1});
                     }
                 }
+                s[i] = original;
             }
         }
         return 0;
