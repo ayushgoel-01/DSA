@@ -1,8 +1,9 @@
 class Solution {
 private:
-    bool bfs(int i, int j, vector<vector<int>>& grid, int n, int m, vector<vector<bool>>& vis){
+    bool bfs(int i, int j, vector<vector<int>>& grid, int n, int m){
         queue<pair<int,int>> q;
         q.push({i,j});
+        grid[i][j] = 1;     // Mark as visited
 
         int delrow[4] = {-1,0,1,0};
         int delcol[4] = {0,1,0,-1};
@@ -12,16 +13,15 @@ private:
             int col = q.front().second;
             q.pop();
 
-            if(row == n-1 && grid[row][col] == 0) return true;
+            if(row == n-1) return true;
 
             for(int x=0; x<4; x++){
                 int nrow = row + delrow[x];
                 int ncol = col + delcol[x];
 
-                if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && !vis[nrow][ncol] && 
-                grid[nrow][ncol] == 0){
+                if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && grid[nrow][ncol] == 0){
                     q.push({nrow,ncol});
-                    vis[nrow][ncol] = true;
+                    grid[nrow][ncol] = 1;
                 }
             }
 
@@ -36,9 +36,8 @@ private:
             grid[cells[i][0]-1][cells[i][1]-1] = 1;
         }
 
-        vector<vector<bool>> vis(row, vector<bool>(col,false));
         for(int j=0; j<col; j++){
-            if(grid[0][j] == 0 && bfs(0,j,grid,row,col,vis)) return true;
+            if(grid[0][j] == 0 && bfs(0,j,grid,row,col)) return true;
         }
         return false;
     }
