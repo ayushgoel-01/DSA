@@ -1,31 +1,21 @@
 class Solution {
 private:
-    void findDepth(TreeNode* root, int d, unordered_map<TreeNode*,int>& mp, int& maxDepth){
-        if(!root) return;
+    pair<int,TreeNode*> solve(TreeNode* root){
+        if(!root) return {0,root};
 
-        maxDepth = max(maxDepth,d);
-        mp[root] = d;
+        auto left = solve(root -> left);
+        auto right = solve(root -> right);
 
-        findDepth(root -> left,d+1,mp,maxDepth);
-        findDepth(root -> right,d+1,mp,maxDepth);
-    }
-
-    TreeNode* solve(TreeNode* root, unordered_map<TreeNode*,int>& mp, int maxDepth){
-        if(!root || mp[root] == maxDepth) return root;
-
-        auto left = solve(root -> left,mp,maxDepth);
-        auto right = solve(root -> right,mp,maxDepth);
-
-        if(left && right) return root;
-        if(left) return left;
-        return right; 
+        if(left.first == right.first){
+            return {left.first+1,root};         // Pair of depth & LCA
+        }
+        else if(left.first > right.first){
+            return {left.first+1,left.second};
+        }
+        else return {right.first+1,right.second};
     }
 public:
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
-        unordered_map<TreeNode*,int> mp;
-        int maxDepth = 0;
-
-        findDepth(root,0,mp,maxDepth);
-        return solve(root,mp,maxDepth);
+        return solve(root).second;
     }
 };
