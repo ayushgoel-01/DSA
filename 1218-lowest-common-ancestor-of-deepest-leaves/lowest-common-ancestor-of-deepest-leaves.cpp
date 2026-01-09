@@ -11,9 +11,7 @@ private:
     }
 
     TreeNode* solve(TreeNode* root, unordered_map<TreeNode*,int>& mp, int maxDepth){
-        if(!root) return NULL;
-
-        if(mp[root] == maxDepth) return root;
+        if(!root || mp[root] == maxDepth) return root;
 
         auto left = solve(root -> left,mp,maxDepth);
         auto right = solve(root -> right,mp,maxDepth);
