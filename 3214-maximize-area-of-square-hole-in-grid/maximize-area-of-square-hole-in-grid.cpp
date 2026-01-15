@@ -27,7 +27,7 @@ public:
             else curr = 1;
         }
 
-        int val = min(maxH+1,maxV+1);
+        int val = min(maxH,maxV) + 1;
         return val * val;
     }
 };
