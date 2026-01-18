@@ -4,7 +4,7 @@ private:
         int val = 0;
         for(int j=0; j<side; j++){
             val += grid[row][col+j];
-        }
+        } 
 
         int diagonal1 = 0, diagonal2 = 0;
         for(int i=0; i<side; i++){
@@ -34,14 +34,13 @@ public:
         int n = grid.size();
         int m = grid[0].size();
 
-        int maxi = 1;
-        for(int row=0; row<n; row++){
-            for(int col=0; col<m; col++){
-                for(int side=2; side+row<=n && side+col<=m; side++){
-                    if(solve(grid,row,col,side,n,m)) maxi = max(maxi,side);
+        for(int side=min(n,m); side>1; side--){
+            for(int row=0; row<n; row++){
+                for(int col=0; col<m; col++){
+                    if(row+side <= n && col+side <= m && solve(grid,row,col,side,n,m)) return side;
                 }
             }
         }
-        return maxi;
+        return 1;
     }
 };
