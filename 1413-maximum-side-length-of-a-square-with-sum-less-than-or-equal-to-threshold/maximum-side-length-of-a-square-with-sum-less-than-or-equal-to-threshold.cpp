@@ -1,6 +1,6 @@
 class Solution {
 private:
-    int solve(vector<vector<int>>& pref, int i, int j, int r2, int c2){
+    int sum(vector<vector<int>>& pref, int i, int j, int r2, int c2){
         int sum = pref[r2][c2];
         if(i > 0) sum -= pref[i-1][c2];
         if(j > 0) sum -= pref[r2][j-1];
@@ -8,6 +8,19 @@ private:
 
         return sum;
     }
+
+    bool solve(vector<vector<int>>& pref, int side, int threshold, int n, int m){
+        for(int i=0; i+side-1<n; i++){
+            for(int j=0; j+side-1<m; j++){
+                int r2 = i + side - 1;
+                int c2 = j + side - 1;
+
+                if(sum(pref,i,j,r2,c2) <= threshold) return true;
+            }
+        }
+        return false;
+    }
+
 public:
     int maxSideLength(vector<vector<int>>& mat, int threshold) {
         int n = mat.size();
@@ -17,23 +30,20 @@ public:
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 pref[i][j] = mat[i][j] + (i > 0 ? pref[i-1][j] : 0) + (j > 0 ? pref[i][j-1] : 0)
-                             - ((i > 0 && j > 0) ? pref[i-1][j-1] : 0);
+                            - ((i > 0 && j > 0) ? pref[i-1][j-1] : 0);
             }
         }
 
-        int best = 0;
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                for(int side=best; side<min(n-i,m-j); side++){
-                    int r2 = i + side;
-                    int c2 = j + side;
+        int start = 1, end = min(n,m), ans = 0;
+        while(start <= end){
+            int mid = start + (end - start)/2;
 
-                    int sum = solve(pref,i,j,r2,c2);
-                    if(sum <= threshold) best = max(best,side+1);
-                    else break;
-                }
+            if(solve(pref,mid,threshold,n,m)){
+                ans = mid;
+                start = mid+1;
             }
+            else end = mid-1;
         }
-        return best;
+        return ans;
     }
 };
