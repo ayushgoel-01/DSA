@@ -24,7 +24,7 @@ public:
         int best = 0;
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                for(int side=0; side<min(n-i,m-j); side++){
+                for(int side=best; side<min(n-i,m-j); side++){
                     int r2 = i + side;
                     int c2 = j + side;
 
