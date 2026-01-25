@@ -1,75 +1,62 @@
 class Solution {
+#define ll long long
 public:
-    using ll = long long;
-
     int minimumPairRemoval(vector<int>& nums) {
         int n = nums.size();
-        if (n <= 1)
-            return 0;
+        vector<ll> v(nums.begin(),nums.end());          // To Avoid overflow, Create ll Copy
 
-        vector<ll> arr(nums.begin(), nums.end());
-        vector<bool> removed(n, false);
-        priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<>> pq;
-
-        int sorted = 0;
-        for (int i = 1; i < n; ++i) {
-            pq.emplace(arr[i - 1] + arr[i], i - 1);
-            if (arr[i] >= arr[i - 1])
-                sorted++;
-        }
-        if (sorted == n - 1)
-            return 0;
-
-        int rem = n;
-        vector<int> prev(n), next(n);
-        for (int i = 0; i < n; ++i) {
-            prev[i] = i - 1;
-            next[i] = i + 1;
+        vector<int> prevIdx(n), nextIdx(n);
+        for(int i=0; i<n; i++){
+            prevIdx[i] = i-1;
+            nextIdx[i] = i+1;
         }
 
-        while (rem > 1) {
-            auto [sum, left] = pq.top();
-            pq.pop();
-            int right = next[left];
-            if (right >= n || removed[left] || removed[right] ||
-                arr[left] + arr[right] != sum)
-                continue;
+        int badPairs = 0;
+        set<pair<ll,int>> st;
 
-            int pre = prev[left];
-            int nxt = next[right];
+        for(int i=0; i<n-1; i++){
+            if(nums[i] > nums[i+1]){
+                badPairs++;
+            }
+            st.insert({nums[i]+nums[i+1],i});
+        }
 
-            if (arr[left] <= arr[right])
-                sorted--;
-            if (pre != -1 && arr[pre] <= arr[left])
-                sorted--;
-            if (nxt != n && arr[right] <= arr[nxt])
-                sorted--;
+        int ans = 0;
+        while(badPairs > 0){
+            int first = st.begin() -> second;
+            int second = nextIdx[first];
 
-            arr[left] += arr[right];
-            removed[right] = true;
-            rem--;
+            int firstLeft = prevIdx[first];
+            int secondRight = nextIdx[second];
 
-            if (pre == -1) {
-                prev[left] = -1;
-            } else {
-                pq.emplace(arr[pre] + arr[left], pre);
-                if (arr[pre] <= arr[left])
-                    sorted++;
+            st.erase(st.begin());
+
+            if(v[first] > v[second]) badPairs--;
+
+            if(firstLeft >= 0){
+                if(v[firstLeft] <= v[first] && v[firstLeft] > v[first] + v[second]) badPairs++;
+                else if(v[firstLeft] > v[first] && v[firstLeft] <= v[first] + v[second]) badPairs--;
+            }
+            if(secondRight < n){
+                if(v[second] <= v[secondRight] && v[first] + v[second] > v[secondRight]) badPairs++;
+                else if(v[second] > v[secondRight] && v[first] + v[second] <= v[secondRight]) badPairs--;
             }
 
-            if (nxt == n) {
-                next[left] = n;
-            } else {
-                prev[nxt] = left;
-                next[left] = nxt;
-                pq.emplace(arr[left] + arr[nxt], left);
-                if (arr[left] <= arr[nxt])
-                    sorted++;
+            if(firstLeft >= 0){
+                st.erase({v[firstLeft] + v[first], firstLeft});
+                st.insert({v[firstLeft] + v[first] + v[second], firstLeft});
+            }
+            if(secondRight < n){
+                st.erase({v[second] + v[secondRight], second});
+                st.insert({v[first] + v[second] + v[secondRight], first});
+
+                prevIdx[secondRight] = first;
             }
 
-            if (sorted == rem - 1)
-                return n - rem;
+            nextIdx[first] = secondRight;
+            v[first] += v[second];
+            ans++;
         }
-        return n;
+        return ans;
     }
 };
