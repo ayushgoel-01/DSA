@@ -1,27 +1,26 @@
 class BSTIterator {
-public:
-    vector<int> v;
-    int ptr = 0;
-
-    void solve(TreeNode* root, vector<int>& v){
-        if(!root) return;
-
-        solve(root -> left,v);
-        v.push_back(root -> val);
-        solve(root -> right,v);
+private:
+    stack<TreeNode*> st;
+    void pushAll(TreeNode* root){
+        while(root){
+            st.push(root);
+            root = root -> left;
+        }
     }
-
+public:
     BSTIterator(TreeNode* root) {
-        solve(root,v);
+        pushAll(root);
     }
     
     int next() {
-        return v[ptr++];
+        auto temp = st.top();
+        st.pop();
+        pushAll(temp -> right);
+        return temp -> val;
     }
     
     bool hasNext() {
-        if(ptr < v.size()) return true;
-        return false;
+        return !st.empty();
     }
 };
 
