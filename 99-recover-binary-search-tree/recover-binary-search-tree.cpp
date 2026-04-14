@@ -1,22 +1,28 @@
 class Solution {
 private:
-    void solve(TreeNode* root, TreeNode* &prev, TreeNode* &first, TreeNode* &end){
+    void solve(TreeNode* root, vector<int>& v){
         if(!root) return;
 
-        solve(root -> left,prev,first,end);
+        solve(root -> left,v);
+        v.push_back(root -> val);
+        solve(root -> right,v);
+    }
+    void check(TreeNode* root, int& idx, vector<int>& v, int n){
+        if(!root) return;
 
-        if(prev && prev -> val > root -> val){
-            if(!first) first = prev;
-            end = root;
-        }
-
-        prev = root;
-        solve(root -> right,prev,first,end);
+        check(root -> left,idx,v,n);
+        root -> val = v[idx++];
+        check(root -> right,idx,v,n);
     }
 public:
     void recoverTree(TreeNode* root) {
-        TreeNode* prev = NULL, *first = NULL, *end = NULL;
-        solve(root,prev,first,end);
-        swap(first -> val,end -> val);
+        vector<int> v;
+        solve(root,v);
+
+        int n = v.size();
+        sort(v.begin(),v.end());
+        int idx = 0;
+
+        check(root,idx,v,n);
     }
 };
