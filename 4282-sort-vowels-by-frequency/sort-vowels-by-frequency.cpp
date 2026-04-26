@@ -6,40 +6,32 @@ private:
 public:
     string sortVowels(string s) {
         int n = s.size();
-        unordered_map<char,int> mp;
-        for(int i=0; i<n; i++){
-            if(mp.find(s[i]) == mp.end()) mp[s[i]] = i;
-        }
 
-        int a = 0, e = 0, i = 0, o = 0, u = 0;
-        for(auto it: s){
-            if(it == 'a') a++;
-            else if(it == 'e') e++;
-            else if(it == 'i') i++;
-            else if(it == 'o') o++;
-            else if(it == 'u') u++;
+        unordered_map<char,int> mp, freq;
+        for(int i=0; i<n; i++){
+            if(isVowel(s[i]) && mp.find(s[i]) == mp.end()) mp[s[i]] = i;
+            if(isVowel(s[i])) freq[s[i]]++;
         }
 
         vector<pair<char,int>> v;
-        v.push_back({'a',a});
-        v.push_back({'e',e});
-        v.push_back({'i',i});
-        v.push_back({'o',o});
-        v.push_back({'u',u});
+        for(auto it: freq){
+            v.push_back({it.first,it.second});
+        }
 
         auto cmp = [&](pair<char,int>& a, pair<char,int>& b){
             if(a.second == b.second) return mp[a.first] < mp[b.first];
             return a.second > b.second;
         };
         sort(v.begin(),v.end(),cmp);
-        int idx = 0;
 
+        int idx = 0;
         string ans = "";
+
         for(int i=0; i<n; i++){
-            if(v[idx].second == 0) idx++;
             if(isVowel(s[i])){
                 ans += v[idx].first;
                 v[idx].second--;
+                if(v[idx].second == 0) idx++;
             }
             else ans += s[i];
         }
