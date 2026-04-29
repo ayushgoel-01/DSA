@@ -10,9 +10,11 @@ public:
         }
         sort(v.begin(),v.end());
 
-        int target = v[n*m/2];
+        int size = n*m;
+
+        int target = v[size/2];
         int ans = 0;
-        for(int i=0; i<n*m; i++){
+        for(int i=0; i<size; i++){
             if(abs(v[i]-target) % x != 0) return -1;
             ans += abs(v[i] - target)/x;
         }
