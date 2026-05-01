@@ -4,6 +4,8 @@ public:
         int n = nums.size();
         int sum = accumulate(nums.begin(),nums.end(),0LL);
 
+        // Equation :- F(k+1) = F(k) + sum - n * nums[n-k-1]
+
         int prev = 0, ans = INT_MIN;
         for(int i=0; i<n; i++){
             prev += i * nums[i];
