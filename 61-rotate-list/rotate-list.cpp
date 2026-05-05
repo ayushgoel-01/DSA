@@ -1,16 +1,5 @@
 class Solution {
 private:
-    ListNode* reverse(ListNode* head){
-        ListNode* prev = NULL, *curr = head, *next = NULL;
-        while(curr){
-            next = curr -> next;
-            curr -> next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    }
-
     int getLen(ListNode* head){
         int ans = 0;
         ListNode* ptr = head;
@@ -28,28 +17,24 @@ public:
         k = k % len;
         if(k == 0) return head;
 
-        ListNode* nh = reverse(head);
-        ListNode* tmp = nh;
-
-        int cnt = 1;
-        while(cnt < k){
-            tmp = tmp -> next;
+        ListNode* head2 = head;
+        int cnt = 0;
+        while(head2 && cnt < len-k-1){
             cnt++;
+            head2 = head2 -> next;
         }
 
-        ListNode* nh2 = NULL;
-        if(tmp -> next) nh2 = tmp -> next;
+        if(head2 -> next == NULL) return head;
+        
 
-        tmp -> next = NULL;
+        ListNode* newHead = head2 -> next;
+        head2 -> next = NULL;
 
-        ListNode* head1 = reverse(nh);
-        ListNode* head2 = reverse(nh2);
-
-        tmp = head1;
-        while(tmp -> next){
-            tmp = tmp -> next;
+        ListNode* temp = newHead;
+        while(temp -> next){
+            temp = temp -> next;
         }
-        tmp -> next = head2;
-        return head1;
+        temp -> next = head;
+        return newHead;
     }
 };
