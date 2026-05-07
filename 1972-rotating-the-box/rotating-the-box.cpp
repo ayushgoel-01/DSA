@@ -16,24 +16,16 @@ public:
         }
 
         for(int j=0; j<n; j++){
+            int space = m-1;
             for(int i=m-1; i>=0; i--){
-
-                if(ans[i][j] == '.'){
-                    bool got = true;
-                    int k = i-1;
-                    while(k >= 0 && ans[k][j] != '#'){
-                        if(ans[k][j] == '*'){
-                            got = false;
-                            i = k;
-                            break;
-                        }
-                        k--;
-                    }
-
-                    if(got && k >= 0){
-                        ans[i][j] = '#';
-                        ans[k][j] = '.';
-                    }
+                if(ans[i][j] == '*'){
+                    space = i-1;
+                    continue;
+                }
+                if(ans[i][j] == '#'){
+                    ans[i][j] = '.';
+                    ans[space][j] = '#';
+                    space--;
                 }
             }
         }
