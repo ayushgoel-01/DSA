@@ -24,6 +24,7 @@ public:
                     while(k >= 0 && ans[k][j] != '#'){
                         if(ans[k][j] == '*'){
                             got = false;
+                            i = k;
                             break;
                         }
                         k--;
@@ -36,8 +37,6 @@ public:
                 }
             }
         }
-
-
         return ans;
     }
 };
