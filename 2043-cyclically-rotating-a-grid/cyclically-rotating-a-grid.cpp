@@ -15,20 +15,12 @@ public:
         vector<vector<int>> ans(n, vector<int>(m,0));
 
         int cycles = min(n,m)/2;
-
-        int startRow = 0;
-        int endRow = n-1;
-        int startCol = 0;
-        int endCol = m-1;
-
-        int startRow1 = 0;
-        int endRow1 = n-1;
-        int startCol1 = 0;
-        int endCol1 = m-1;
+        int startRow = 0, startRow1 = 0;
+        int endRow = n-1, endRow1 = n-1;
+        int startCol = 0, startCol1 = 0;
+        int endCol = m-1, endCol1 = m-1;
 
         while(cycles--){
-
-
             vector<int> v;
             for(int j=startCol; j<=endCol; j++){
                 v.push_back(grid[startRow][j]);
@@ -50,11 +42,8 @@ public:
             }
             startCol++;
 
-            int size = v.size();
-            int newK = k % size;
-
+            int newK = k % v.size();
             getReverse(v,newK);
-
             int idx = 0;
 
             for(int j=startCol1; j<=endCol1; j++){
