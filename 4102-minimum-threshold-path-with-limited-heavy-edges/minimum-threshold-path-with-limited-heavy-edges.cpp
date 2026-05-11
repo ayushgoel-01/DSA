@@ -1,4 +1,4 @@
-class Solution {
+class Solution {            // Using Binary Search on Answers + 0/1 BFS
 private:
     bool solve(int source, int target, int threshold, int k, vector<pair<int,int>> adj[], int n){
 
@@ -19,7 +19,7 @@ private:
                 if(dist[node] + cost < dist[adjNode]){
                     dist[adjNode] = dist[node] + cost;
 
-                    if(cost == 0) dq.push_front(adjNode);
+                    if(cost == 0) dq.push_front(adjNode);   // nodes with 0 cost will get Processed first
                     else dq.push_back(adjNode);
                 }
             }
@@ -42,7 +42,7 @@ public:
             adj[v].push_back({u,w});
         }
 
-        if(!solve(source,target,end,k,adj,n)) return -1;
+        if(!solve(source,target,end,k,adj,n)) return -1;       // Check extreme case first, if not possible
 
         int ans = -1;
         while(start <= end){
