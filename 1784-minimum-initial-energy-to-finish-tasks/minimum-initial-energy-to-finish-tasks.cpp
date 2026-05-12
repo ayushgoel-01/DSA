@@ -1,8 +1,7 @@
 class Solution {
 private:
     bool solve(vector<vector<int>>& tasks, int mid){
-        int val = mid;
-        for(auto it: tasks){
+        for(auto& it: tasks){
             int actual = it[0];
             int mini = it[1];
 
