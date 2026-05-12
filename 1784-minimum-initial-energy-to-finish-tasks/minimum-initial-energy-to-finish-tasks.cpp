@@ -19,7 +19,7 @@ public:
         sort(tasks.begin(),tasks.end(),cmp);
 
         int start = 1, end = 0;
-        for(auto it: tasks){
+        for(auto& it: tasks){
             start = max(start,it[1]);
             end += it[1];
         }
